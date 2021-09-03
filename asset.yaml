@@ -534,11 +534,11 @@ spec:
     - name: SHIPPING_ADDRESS_BUCKET_ID
       valueFrom:
         resourceFieldRef:
-          schemaName:  iyzico-shipping-address-4
+          schemaName: iyzico-shipping-address-4
     - name: BASKET_ITEMS_BUCKET_ID
       valueFrom:
         resourceFieldRef:
-          schemaName:  iyzico-basket-items-6
+          schemaName: iyzico-basket-items-6
     - name: IYZIPAY_API_KEY
       value: ""
     - name: IYZIPAY_SECRET_KEY
@@ -550,7 +550,7 @@ spec:
       version: ^0.9.8
     - name: iyzipay
       version: ^2.0.48
-  title: " Iyzico Functions"
+  title: "Iyzico Functions"
   code: ./function/iyzico-functions-1.js
   runtime:
     name: Node
