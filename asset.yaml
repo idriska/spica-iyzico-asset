@@ -1,0 +1,545 @@
+# BUCKET - IYZICO-Product
+apiVersion: bucket/v1
+kind: Schema
+metadata:
+  name: iyzico-product-7
+spec:
+  title: IYZICO-Product
+  description: Describe your new bucket
+  icon: view_stream
+  primary: name
+  readOnly: false
+  history: false
+  properties:
+    id:
+      type: string
+      description: Description of the id input
+      options:
+        position: bottom
+    name:
+      type: string
+      description: Description of the name input
+      options:
+        position: bottom
+    item_type:
+      type: string
+      description: Description of the item_type input
+      options:
+        position: bottom
+      default: PHYSICAL
+      enum:
+        - PHYSICAL
+        - VIRTUAL
+    category1:
+      type: string
+      description: Description of the category1 input
+      options:
+        position: bottom
+    category2:
+      type: string
+      description: Description of the category2 input
+      options:
+        position: bottom
+    price:
+      type: string
+      description: Description of the price input
+      options:
+        position: bottom
+  acl:
+    write: true==true
+    read: true==true
+  required:
+    - name
+    - category1
+    - price
+    - id
+    - item_type
+  order: 6
+---
+# BUCKET - IYZICO-Buyer
+apiVersion: bucket/v1
+kind: Schema
+metadata:
+  name: iyzico-buyer-2
+spec:
+  title: IYZICO-Buyer
+  description: Describe your new bucket
+  icon: view_stream
+  primary: email
+  readOnly: false
+  history: false
+  properties:
+    id:
+      type: string
+      description: Description of the id input
+      options:
+        position: bottom
+    name:
+      type: string
+      description: Description of the name input
+      options:
+        position: bottom
+    surname:
+      type: string
+      description: Description of the surname input
+      options:
+        position: bottom
+      readOnly: false
+    email:
+      type: string
+      description: Description of the email input
+      options:
+        position: bottom
+        unique: true
+      pattern: ""
+    identity_number:
+      type: string
+      description: Description of the identity_number input
+      options:
+        position: bottom
+    gsm_number:
+      type: string
+      description: Description of the gsm_number input
+      options:
+        position: bottom
+    ip:
+      type: string
+      description: Description of the ip input
+      options:
+        position: bottom
+    city:
+      type: string
+      description: Description of the city input
+      options:
+        position: bottom
+    country:
+      type: string
+      description: Description of the country input
+      options:
+        position: bottom
+    registration_address:
+      type: string
+      description: Description of the registration_address input
+      options:
+        position: bottom
+    zip_code:
+      type: string
+      description: Description of the zip_code input
+      options:
+        position: bottom
+  acl:
+    write: true==true
+    read: true==true
+  required:
+    - surname
+    - name
+    - ip
+    - city
+    - country
+    - email
+    - id
+    - identity_number
+    - registration_address
+  order: 1
+---
+# BUCKET - IYZICO-Basket Items
+apiVersion: bucket/v1
+kind: Schema
+metadata:
+  name: iyzico-basket-items-6
+spec:
+  title: IYZICO-Basket Items
+  description: Describe your new bucket
+  icon: view_stream
+  primary: name
+  readOnly: false
+  history: false
+  properties:
+    name:
+      type: string
+      description: Description of the name input
+      options:
+        position: bottom
+    product:
+      type: relation
+      description: Description of the product input
+      options:
+        position: bottom
+      relationType: onetomany
+      dependent: false
+      bucket:
+        resourceFieldRef:
+          schemaName: iyzico-product-7
+  acl:
+    write: true==true
+    read: true==true
+  required:
+    - name
+    - product
+  order: 5
+---
+# BUCKET - IYZICO-Billing Address
+apiVersion: bucket/v1
+kind: Schema
+metadata:
+  name: iyzico-billing-address-5
+spec:
+  title: IYZICO-Billing Address
+  description: Describe your new bucket
+  icon: view_stream
+  primary: contact_name
+  readOnly: false
+  history: false
+  properties:
+    contact_name:
+      type: string
+      description: Description of the contact_name input
+      options:
+        position: bottom
+    city:
+      type: string
+      description: Description of the city input
+      options:
+        position: bottom
+    country:
+      type: string
+      description: Description of the country input
+      options:
+        position: bottom
+    address:
+      type: string
+      description: Description of the address input
+      options:
+        position: bottom
+    zip_code:
+      type: string
+      description: Description of the zip_code input
+      options:
+        position: bottom
+  acl:
+    write: true==true
+    read: true==true
+  required:
+    - city
+    - country
+    - address
+    - contact_name
+  order: 4
+---
+# BUCKET - IYZICO-Shipping Address
+apiVersion: bucket/v1
+kind: Schema
+metadata:
+  name: iyzico-shipping-address-4
+spec:
+  title: IYZICO-Shipping Address
+  description: Describe your new bucket
+  icon: view_stream
+  primary: contact_name
+  readOnly: false
+  history: false
+  properties:
+    contact_name:
+      type: string
+      description: Description of the contact_name input
+      options:
+        position: bottom
+    city:
+      type: string
+      description: Description of the city input
+      options:
+        position: bottom
+    country:
+      type: string
+      description: Description of the country input
+      options:
+        position: bottom
+    address:
+      type: string
+      description: Description of the address input
+      options:
+        position: bottom
+    zip_code:
+      type: string
+      description: Description of the zip_code input
+      options:
+        position: bottom
+    buyer:
+      type: relation
+      description: Description of the buyer input
+      options:
+        position: bottom
+      relationType: onetoone
+      dependent: false
+      bucket:
+        resourceFieldRef:
+          schemaName: iyzico-buyer-2
+  acl:
+    write: true==true
+    read: true==true
+  required:
+    - city
+    - country
+    - address
+    - contact_name
+  order: 3
+---
+# BUCKET - IYZICO-Payment Card
+apiVersion: bucket/v1
+kind: Schema
+metadata:
+  name: iyzico-payment-card-3
+spec:
+  title: IYZICO-Payment Card
+  description: Describe your new bucket
+  icon: view_stream
+  primary: card_number
+  readOnly: false
+  history: false
+  properties:
+    card_holder_name:
+      type: string
+      description: Description of the card_holder_name input
+      options:
+        position: bottom
+    card_number:
+      type: string
+      description: Description of the card_number input
+      options:
+        position: bottom
+    expire_month:
+      type: string
+      description: Description of the expire_month input
+      options:
+        position: bottom
+    expire_year:
+      type: string
+      description: Description of the expire_year input
+      options:
+        position: bottom
+    cvc:
+      type: string
+      description: Description of the cvc input
+      options:
+        position: bottom
+    register_card:
+      type: string
+      description: Description of the register_card input
+      options:
+        position: bottom
+      default: "0"
+    zip_code:
+      type: string
+      description: Description of the zip_code input
+      options:
+        position: bottom
+    buyer:
+      type: relation
+      description: Description of the buyer input
+      options:
+        position: bottom
+      relationType: onetoone
+      dependent: false
+      bucket:
+        resourceFieldRef:
+          schemaName: iyzico-buyer-2
+  acl:
+    write: true==true
+    read: true==true
+  required:
+    - cvc
+    - card_number
+    - card_holder_name
+    - expire_month
+    - expire_year
+  order: 2
+---
+# BUCKET - IYZICO-Pay
+apiVersion: bucket/v1
+kind: Schema
+metadata:
+  name: iyzico-pay-1
+spec:
+  title: IYZICO-Pay
+  description: Describe your new bucket
+  icon: view_stream
+  primary: payment_id
+  readOnly: false
+  history: false
+  properties:
+    payment_id:
+      type: string
+      description: DO NOT TOUCH! IT WILL BE FILLED AUTOMATICALLY!
+      options:
+        position: bottom
+    locale:
+      type: string
+      description: Description of the locale input
+      options:
+        position: bottom
+    price:
+      type: string
+      description: Description of the price input
+      options:
+        position: bottom
+      default: "0"
+    paid_price:
+      type: string
+      description: Description of the paid_price input
+      options:
+        position: bottom
+      default: "0"
+    currency:
+      type: string
+      description: Description of the currency input
+      options:
+        position: bottom
+    installment:
+      type: string
+      description: Description of the installment input
+      options:
+        position: bottom
+      default: "1"
+      enum:
+        - "1"
+        - "2"
+        - "3"
+        - "6"
+        - "9"
+        - "12"
+    buyer:
+      type: relation
+      description: Description of the buyer input
+      options:
+        position: bottom
+      relationType: onetoone
+      dependent: false
+      primary: email
+      bucket:
+        resourceFieldRef:
+          schemaName: iyzico-buyer-2
+    payment_card:
+      type: relation
+      description: Description of the payment_card input
+      options:
+        position: bottom
+      relationType: onetoone
+      dependent: false
+      primary: card_number
+      bucket:
+        resourceFieldRef:
+          schemaName: iyzico-payment-card-3
+    shipping_address:
+      type: relation
+      description: Description of the shipping_address input
+      options:
+        position: bottom
+      relationType: onetoone
+      dependent: false
+      primary: contact_name
+      bucket:
+        resourceFieldRef:
+          schemaName: iyzico-shipping-address-4
+    billing_address:
+      type: relation
+      description: Description of the billing_address input
+      options:
+        position: bottom
+      relationType: onetoone
+      dependent: false
+      primary: contact_name
+      bucket:
+        resourceFieldRef:
+          schemaName: iyzico-billing-address-5
+    basket_items:
+      type: relation
+      description: Description of the basket_items input
+      options:
+        position: bottom
+      relationType: onetoone
+      dependent: false
+      primary: name
+      bucket:
+        resourceFieldRef:
+          schemaName: iyzico-basket-items-6
+    created_at:
+      type: date
+      description: Description of the created_at input
+      options:
+        position: bottom
+      default: :created_at
+    status:
+      type: string
+      description: DO NOT TOUCH! IT WILL BE FILLED AUTOMATICALLY!
+      options:
+        position: bottom
+    error_message:
+      type: string
+      description: DO NOT TOUCH! IT WILL BE FILLED AUTOMATICALLY!
+      options:
+        position: bottom
+  acl:
+    write: true==true
+    read: true==true
+  required:
+    - price
+    - currency
+    - installment
+    - buyer
+    - basket_items
+  order: 0
+---
+# FUNCTION -  Iyzico Functions
+apiVersion: function/v1
+kind: Function
+metadata:
+  name: iyzico-functions-1
+spec:
+  description: " Iyzico Functions description"
+  language: javascript
+  timeout: 26
+  environment:
+    - name: PAY_BUCKET_ID
+      value: 612f5f8d0d902e002c3ca0aa
+    - name: BUYER_BUCKET_ID
+      value: 612f59220d902e002c3ca09f
+    - name: SECRET_API_KEY
+      value: 10xuot18kqqp6y7k
+    - name: PAYMENT_CARD_BUCKET_ID
+      value: 612f5ac50d902e002c3ca0a1
+    - name: BILLING_ADDRESS_BUCKET_ID
+      value: 612f5c140d902e002c3ca0a6
+    - name: SHIPPING_ADDRESS_BUCKET_ID
+      value: 612f5b890d902e002c3ca0a3
+    - name: BASKET_ITEMS_BUCKET_ID
+      value: 612f5cbc0d902e002c3ca0a8
+    - name: IYZIPAY_API_KEY
+      value: sandbox-gjYYcpH8xb9BFTzJl0EGD03KWV8zLziU
+    - name: IYZIPAY_SECRET_KEY
+      value: sandbox-ze5s491F7kEcufdQpcV3Hx0vBZKzN0HF
+    - name: IYZIPAY_URI
+      value: https://sandbox-api.iyzipay.com
+  dependency:
+    - name: "@spica-devkit/bucket"
+      version: ^0.9.8
+    - name: iyzipay
+      version: ^2.0.48
+  title: " Iyzico Functions"
+  code: ./function/iyzico-functions-1.js
+  runtime:
+    name: Node
+    language: Javascript
+---
+# TRIGGER - payment
+apiVersion: function/v1
+kind: Trigger
+metadata:
+  name: payment
+spec:
+  type: http
+  active: true
+  name: payment
+  func: iyzico-functions-1
+  httpOptions:
+    method: Post
+    path: /iyzipay
