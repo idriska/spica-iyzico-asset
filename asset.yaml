@@ -8,7 +8,7 @@ spec:
   name: Secret Api Key For Iyzico Asset
   policies:
     - FunctionFullAccess
-    - BucketReadOnlyAccess
+    - BucketFullAccess
 ---
 # BUCKET - IYZICO-Product
 apiVersion: bucket/v1
