@@ -1,3 +1,75 @@
+/***********************************************************************
+What can this asset do?
+  -You can receive payment through the Iyzico system
+HOW TO USE? 
+    1- Create Iyzico account 
+        * Sandbox https://sandbox-merchant.iyzipay.com/auth/register
+        * Product https://www.iyzico.com/en/business/signup-business-account
+    2- In merchant settings, copy the API Key and Secret Key
+    3- Set IYZIPAY_API_KEY, IYZIPAY_SECRET_KEY, IYZIPAY_URI values in Environment Variables
+    4- Send a POST request to the endpoint https://<PROJECT DOMAIN>.hq.spicaengine.com/api/fn-execute/iyzipay
+    5- Body parameters should be like this
+        {
+            formType: 'popup', // If you want to use the Iyzico payment form (There are 2 types: popup, responsive)
+            data: {
+                locale: 'TR', // not required (default TR),
+                currency: 'TRY', // not required (default TRY),
+                installment: '1', // not required (default 1 There are 6 types: 1, 2, 3, 6, 9, 12)
+                // If you want to use the Iyzico payment form, do not include in "paymentCard" parameter
+                // paymentCard: '61307f580d902e002c3ca185', // If using a saved card, set the _id from the IYZICO-Payment Card Bucket
+                paymentCard: {
+                    register_card: '0', // not required
+                    card_holder_name: 'Test User',
+                    card_number: '4603450000000000',
+                    expire_month: '12',
+                    expire_year: '25',
+                    cvc: '152',
+                    zip_code: '07000', // not required
+                },
+                // buyer: '61307fb00d902e002c3ca187', // If using a saved buyer, set the _id from the IYZICO-Buyer Bucket
+                buyer: {
+                    id: 'BWDQ',
+                    name: 'Test',
+                    surname: 'User',
+                    email: 'test@gmail.com',
+                    identity_number: '231312123412',
+                    gsm_number: '333232432',
+                    ip: '192.168.1.1',
+                    city: 'Antalya',
+                    country: 'Turkey',
+                    registration_address: 'Arapsuyu mah. Konyaaltı',
+                    zipCode: '07000', // not required
+                },
+                // billingAddress: '612f70600d902e002c3ca0ca', // If using a saved billingAddress, set the _id from the IYZICO-Billing Address Bucket
+                billingAddress: {
+                    city: 'Istanbul',
+                    country: 'Turkey',
+                    address: 'Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1',
+                    contact_name: 'Test User',
+                    zip_code: '34000', // not required
+                },
+                // shippingAddress is required if there is a PHYSICAL type product in the basket. Not required (for VIRTUAL type products)
+                // shippingAddress: '61307f330d902e002c3ca183', // If using a saved shippingAddress, set the _id from the IYZICO-Shipping Address Bucket
+                shippingAddress: {
+                    contact_name: 'Test User',
+                    city: 'Antalya',
+                    country: 'Turkey',
+                    address: 'Arapsuyu mah. Konyaaltı',
+                    zip_code: '07000', // not required
+                },
+                // basket: '61307ef20d902e002c3ca17f', // If using a saved basket, set the _id from the IYZICO-Basket Items Address Bucket
+                basket: {
+                    name: 'Basket',
+                    product: ['612f8cc00d902e002c3ca0e3', '612f92200d902e002c3ca0f1'], // In the array, add the _id of the product that is in the IYZICO-Product Bucket
+                },
+                paidPrice: 160,
+            },
+        };
+        
+NOTES * 
+ - Do not change the filled environment variables
+/************************************************************************/
+
 import * as Bucket from "@spica-devkit/bucket";
 const Iyzipay = require("iyzipay");
 
