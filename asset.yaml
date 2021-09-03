@@ -5,7 +5,7 @@ kind: ApiKey
 metadata:
   name: iyzico-asset-apikey
 spec:
-  name: Secret Api Key For Asset Of Spica To Asset
+  name: Secret Api Key For Iyzico Asset
   policies:
     - FunctionFullAccess
     - BucketReadOnlyAccess
