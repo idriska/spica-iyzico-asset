@@ -1,3 +1,15 @@
+
+# API KEY
+apiVersion: passport/v1
+kind: ApiKey
+metadata:
+  name: iyzico-asset-apikey
+spec:
+  name: Secret Api Key For Asset Of Spica To Asset
+  policies:
+    - FunctionFullAccess
+    - BucketReadOnlyAccess
+---
 # BUCKET - IYZICO-Product
 apiVersion: bucket/v1
 kind: Schema
@@ -499,26 +511,40 @@ spec:
   language: javascript
   timeout: 26
   environment:
+    - name: API_KEY
+      valueFrom:
+        resourceFieldRef:
+          apiKeyName: iyzico-asset-apikey
     - name: PAY_BUCKET_ID
-      value: 612f5f8d0d902e002c3ca0aa
+      valueFrom:
+        resourceFieldRef:
+          schemaName: iyzico-pay-1
     - name: BUYER_BUCKET_ID
-      value: 612f59220d902e002c3ca09f
-    - name: SECRET_API_KEY
-      value: 10xuot18kqqp6y7k
+      valueFrom:
+        resourceFieldRef:
+          schemaName: iyzico-buyer-2
     - name: PAYMENT_CARD_BUCKET_ID
-      value: 612f5ac50d902e002c3ca0a1
+      valueFrom:
+        resourceFieldRef:
+          schemaName: iyzico-payment-card-3
     - name: BILLING_ADDRESS_BUCKET_ID
-      value: 612f5c140d902e002c3ca0a6
+      valueFrom:
+        resourceFieldRef:
+          schemaName: iyzico-billing-address-5
     - name: SHIPPING_ADDRESS_BUCKET_ID
-      value: 612f5b890d902e002c3ca0a3
+      valueFrom:
+        resourceFieldRef:
+          schemaName:  iyzico-shipping-address-4
     - name: BASKET_ITEMS_BUCKET_ID
-      value: 612f5cbc0d902e002c3ca0a8
+      valueFrom:
+        resourceFieldRef:
+          schemaName:  iyzico-basket-items-6
     - name: IYZIPAY_API_KEY
-      value: sandbox-gjYYcpH8xb9BFTzJl0EGD03KWV8zLziU
+      value: ""
     - name: IYZIPAY_SECRET_KEY
-      value: sandbox-ze5s491F7kEcufdQpcV3Hx0vBZKzN0HF
+      value: ""
     - name: IYZIPAY_URI
-      value: https://sandbox-api.iyzipay.com
+      value: ""
   dependency:
     - name: "@spica-devkit/bucket"
       version: ^0.9.8
