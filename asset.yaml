@@ -511,7 +511,7 @@ spec:
   language: javascript
   timeout: 120
   environment:
-    - name: API_KEY
+    - name: SECRET_API_KEY
       valueFrom:
         resourceFieldRef:
           apiKeyName: iyzico-asset-apikey
