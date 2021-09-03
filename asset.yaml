@@ -507,9 +507,9 @@ kind: Function
 metadata:
   name: iyzico-functions-1
 spec:
-  description: " Iyzico Functions description"
+  description: "Iyzico Functions description"
   language: javascript
-  timeout: 26
+  timeout: 120
   environment:
     - name: API_KEY
       valueFrom:
