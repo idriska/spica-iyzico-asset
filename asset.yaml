@@ -14,7 +14,7 @@ spec:
 apiVersion: bucket/v1
 kind: Schema
 metadata:
-  name: iyzico-product-7
+  name: iyzico-product-6
 spec:
   title: IYZICO-Product
   description: Describe your new bucket
@@ -158,7 +158,7 @@ spec:
 apiVersion: bucket/v1
 kind: Schema
 metadata:
-  name: iyzico-basket-items-6
+  name: iyzico-basket-items-5
 spec:
   title: IYZICO-Basket Items
   description: Describe your new bucket
@@ -181,7 +181,7 @@ spec:
       dependent: false
       bucket:
         resourceFieldRef:
-          schemaName: iyzico-product-7
+          schemaName: iyzico-product-6
   acl:
     write: true==true
     read: true==true
@@ -194,7 +194,7 @@ spec:
 apiVersion: bucket/v1
 kind: Schema
 metadata:
-  name: iyzico-billing-address-5
+  name: iyzico-billing-address-4
 spec:
   title: IYZICO-Billing Address
   description: Describe your new bucket
@@ -242,7 +242,7 @@ spec:
 apiVersion: bucket/v1
 kind: Schema
 metadata:
-  name: iyzico-shipping-address-4
+  name: iyzico-shipping-address-3
 spec:
   title: IYZICO-Shipping Address
   description: Describe your new bucket
@@ -296,75 +296,46 @@ spec:
     - contact_name
   order: 3
 ---
-# BUCKET - IYZICO-Payment Card
+# BUCKET - IYZICO-Card
 apiVersion: bucket/v1
 kind: Schema
 metadata:
-  name: iyzico-payment-card-3
+  name: iyzico-card-7
 spec:
-  title: IYZICO-Payment Card
+  title: IYZICO-Card
   description: Describe your new bucket
   icon: view_stream
-  primary: card_number
+  primary: email
   readOnly: false
   history: false
   properties:
-    card_holder_name:
+    email:
       type: string
-      description: Description of the card_holder_name input
+      description: Description of the email input
       options:
         position: bottom
-    card_number:
+    card_user_key:
       type: string
-      description: Description of the card_number input
+      description: Description of the card_user_key input
       options:
         position: bottom
-    expire_month:
+    card_token:
       type: string
-      description: Description of the expire_month input
+      description: Description of the card_token input
       options:
         position: bottom
-    expire_year:
+    card_alias:
       type: string
-      description: Description of the expire_year input
+      description: Description of the card_alias input
       options:
         position: bottom
-    cvc:
-      type: string
-      description: Description of the cvc input
-      options:
-        position: bottom
-    register_card:
-      type: string
-      description: Description of the register_card input
-      options:
-        position: bottom
-      default: "0"
-    zip_code:
-      type: string
-      description: Description of the zip_code input
-      options:
-        position: bottom
-    buyer:
-      type: relation
-      description: Description of the buyer input
-      options:
-        position: bottom
-      relationType: onetoone
-      dependent: false
-      bucket:
-        resourceFieldRef:
-          schemaName: iyzico-buyer-2
   acl:
     write: true==true
     read: true==true
   required:
-    - cvc
-    - card_number
-    - card_holder_name
-    - expire_month
-    - expire_year
-  order: 2
+    - email
+    - card_alias
+  order: 7
 ---
 # BUCKET - IYZICO-Pay
 apiVersion: bucket/v1
@@ -437,10 +408,10 @@ spec:
         position: bottom
       relationType: onetoone
       dependent: false
-      primary: card_number
+      primary: email
       bucket:
         resourceFieldRef:
-          schemaName: iyzico-payment-card-3
+          schemaName: iyzico-card-7
     shipping_address:
       type: relation
       description: Description of the shipping_address input
@@ -451,7 +422,7 @@ spec:
       primary: contact_name
       bucket:
         resourceFieldRef:
-          schemaName: iyzico-shipping-address-4
+          schemaName: iyzico-shipping-address-3
     billing_address:
       type: relation
       description: Description of the billing_address input
@@ -462,7 +433,7 @@ spec:
       primary: contact_name
       bucket:
         resourceFieldRef:
-          schemaName: iyzico-billing-address-5
+          schemaName: iyzico-billing-address-4
     basket_items:
       type: relation
       description: Description of the basket_items input
@@ -473,7 +444,7 @@ spec:
       primary: name
       bucket:
         resourceFieldRef:
-          schemaName: iyzico-basket-items-6
+          schemaName: iyzico-basket-items-5
     created_at:
       type: date
       description: Description of the created_at input
@@ -490,6 +461,14 @@ spec:
       description: DO NOT TOUCH! IT WILL BE FILLED AUTOMATICALLY!
       options:
         position: bottom
+    item_transactions:
+      type: array
+      description: Description of the item_transactions input
+      options:
+        position: bottom
+      items:
+        title: Title of the items
+        type: string
   acl:
     write: true==true
     read: true==true
@@ -509,7 +488,7 @@ metadata:
 spec:
   description: "Iyzico Functions description"
   language: javascript
-  timeout: 120
+  timeout: 90
   environment:
     - name: SECRET_API_KEY
       valueFrom:
@@ -523,22 +502,22 @@ spec:
       valueFrom:
         resourceFieldRef:
           schemaName: iyzico-buyer-2
-    - name: PAYMENT_CARD_BUCKET_ID
+    - name: CARD_BUCKET_ID
       valueFrom:
         resourceFieldRef:
-          schemaName: iyzico-payment-card-3
+          schemaName: iyzico-card-7
     - name: BILLING_ADDRESS_BUCKET_ID
       valueFrom:
         resourceFieldRef:
-          schemaName: iyzico-billing-address-5
+          schemaName: iyzico-billing-address-4
     - name: SHIPPING_ADDRESS_BUCKET_ID
       valueFrom:
         resourceFieldRef:
-          schemaName: iyzico-shipping-address-4
+          schemaName:  iyzico-shipping-address-3
     - name: BASKET_ITEMS_BUCKET_ID
       valueFrom:
         resourceFieldRef:
-          schemaName: iyzico-basket-items-6
+          schemaName:  iyzico-basket-items-5
     - name: IYZIPAY_API_KEY
       value: ""
     - name: IYZIPAY_SECRET_KEY
@@ -569,3 +548,17 @@ spec:
   httpOptions:
     method: Post
     path: /iyzipay
+---
+# TRIGGER - createIyziCard
+apiVersion: function/v1
+kind: Trigger
+metadata:
+  name: createIyziCard
+spec:
+  type: http
+  active: true
+  name: createIyziCard
+  func: iyzico-functions-1
+  httpOptions:
+    method: Post
+    path: /createiyzicard
